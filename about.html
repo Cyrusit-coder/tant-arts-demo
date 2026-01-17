@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Tant Arts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- COLOR PALETTE: BLACK, TEAL, ORANGE --- */
+            --bg-dark: #050505;
+            --bg-section: #0b0b0b;
+            --bg-card: #121212;
+            
+            /* Primary Accent: TEAL */
+            --accent-primary: #00d4aa; 
+            
+            /* Pop Accent: ORANGE */
+            --accent-pop: #ff6b35; 
+            --accent-pop-hover: #ff8657;
+            
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-light: rgba(255,255,255,0.1);
+            
+            --font-script: 'Great Vibes', cursive;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- SHARED NAVIGATION (Identical to Index) --- */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            background: transparent; transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.95); padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); border-bottom: 1px solid var(--border-light);
+        }
+        .logo {
+            font-family: var(--font-script); font-size: 2.5rem; color: var(--text-main);
+            text-decoration: none; text-shadow: 0 2px 10px rgba(0,0,0,0.5); position: relative; z-index: 2002;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-links a {
+            color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--accent-primary); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--accent-primary); }
+        .btn-nav {
+            padding: 0.8rem 1.8rem; background: transparent; border: 2px solid var(--accent-primary);
+            color: var(--accent-primary) !important; font-weight: 700; transition: all 0.3s ease;
+        }
+        .btn-nav:hover { background: var(--accent-primary); color: var(--bg-dark) !important; }
+        .mobile-toggle {
+            display: none; background: none; border: none; color: var(--text-main);
+            font-size: 2rem; cursor: pointer; position: relative; z-index: 2002; transition: color 0.3s ease;
+        }
+
+        /* Mobile Nav Styles */
+        @media (max-width: 900px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: rgba(5, 5, 5, 0.98); backdrop-filter: blur(15px);
+                flex-direction: column; justify-content: center; align-items: center; gap: 3rem;
+                display: none; z-index: 2001;
+            }
+            .nav-links.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+            .nav-links li { width: 100%; text-align: center; opacity: 0; animation: slideUp 0.4s ease forwards; }
+            .nav-links li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-links li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-links li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-links a { font-size: 1.8rem; display: block; color: #ffffff !important; padding: 10px; }
+            .btn-nav { display: inline-block; margin-top: 1rem; font-size: 1.2rem; padding: 1rem 3rem; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PAGE HERO --- */
+        .page-hero {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.95) 100%);
+        }
+        .page-title-box { position: relative; z-index: 2; text-align: center; padding: 0 5%; }
+        .page-sub { color: var(--accent-primary); letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 1rem; }
+        .page-title { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--white); margin: 0; }
+
+        /* --- THE STORY SECTION --- */
+        .story-section { padding: 8rem 5%; background: var(--bg-dark); }
+        .story-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .story-text h3 { font-family: var(--font-serif); font-size: 2.5rem; color: var(--white); margin-bottom: 1.5rem; }
+        .story-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.8; }
+        .story-img-box { position: relative; }
+        .story-img { width: 100%; border-radius: 4px; filter: grayscale(100%); transition: filter 0.5s ease; border: 1px solid var(--border-light); }
+        .story-img-box:hover .story-img { filter: grayscale(0%); border-color: var(--accent-primary); }
+        /* Offset border effect */
+        .story-img-box::after {
+            content: ''; position: absolute; top: 20px; right: -20px; width: 100%; height: 100%;
+            border: 2px solid var(--accent-primary); z-index: -1; transition: all 0.3s;
+        }
+        .story-img-box:hover::after { top: 10px; right: -10px; }
+
+        /* --- CORE VALUES GRID --- */
+        .values-section { background: var(--bg-section); padding: 8rem 5%; text-align: center; }
+        .section-header { margin-bottom: 5rem; }
+        .section-title { font-family: var(--font-serif); font-size: 2.5rem; color: var(--white); }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; max-width: 1300px; margin: 0 auto; }
+        .value-card {
+            background: var(--bg-card); padding: 3rem 2rem; border: 1px solid var(--border-light);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .value-card:hover { transform: translateY(-10px); border-color: var(--accent-primary); }
+        .value-icon { font-size: 2.5rem; color: var(--accent-pop); margin-bottom: 1.5rem; }
+        .value-title { font-family: var(--font-serif); font-size: 1.5rem; color: var(--white); margin-bottom: 1rem; }
+        .value-desc { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- STATS STRIP --- */
+        .stats-section {
+            background: var(--bg-dark); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+            padding: 4rem 5%;
+        }
+        .stats-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 3rem; text-align: center; }
+        .stat-number { display: block; font-size: 3.5rem; font-weight: 800; color: var(--accent-primary); line-height: 1; margin-bottom: 0.5rem; }
+        .stat-label { color: var(--white); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+
+        /* --- TEAM / LEADERSHIP --- */
+        .team-section { padding: 8rem 5%; background: var(--bg-dark); }
+        .team-card { position: relative; overflow: hidden; border: 1px solid var(--border-light); }
+        .team-img { width: 100%; height: 400px; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; display: block; }
+        .team-card:hover .team-img { filter: grayscale(0%); }
+        .team-info {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+        .team-name { color: var(--white); font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.2rem; }
+        .team-role { color: var(--accent-pop); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        /* --- FOOTER (Identical) --- */
+        .main-footer { background-color: #050505; padding: 6rem 5% 3rem; border-top: 1px solid var(--border-light); font-family: var(--font-sans); }
+        .footer-container { max-width: 1300px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem; }
+        .footer-logo { font-family: var(--font-script); font-size: 2.5rem; color: var(--white); text-decoration: none; display: block; }
+        .footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; letter-spacing: 1px; }
+        .footer-socials { display: flex; gap: 1.5rem; }
+        .social-link { width: 45px; height: 45px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; transition: all 0.3s ease; border-radius: 50%; }
+        .social-link:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-3px); }
+        .footer-divider { height: 1px; background: var(--border-light); margin-bottom: 4rem; }
+        .footer-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; margin-bottom: 5rem; }
+        .footer-heading { font-family: var(--font-serif); font-size: 1.2rem; color: var(--white); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-left: 2px solid var(--accent-primary); padding-left: 1rem; }
+        .footer-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .footer-list a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; display: flex; align-items: center; }
+        .footer-list a::before { content: '•'; color: var(--accent-primary); margin-right: 10px; opacity: 0; transform: translateX(-10px); transition: all 0.3s; }
+        .footer-list a:hover { color: var(--white); }
+        .footer-list a:hover::before { opacity: 1; transform: translateX(0); }
+        .footer-tags { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .tag-box { display: block; padding: 1rem; border: 1px solid var(--border-light); color: var(--text-muted); text-decoration: none; text-align: center; font-size: 0.9rem; transition: all 0.3s ease; }
+        .tag-box:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(0, 212, 170, 0.05); }
+        .footer-bottom { border-top: 1px solid var(--border-light); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 0.85rem; flex-wrap: wrap; gap: 1rem; }
+        .legal-links a { color: #666; text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
+        .legal-links a:hover { color: var(--accent-primary); }
+
+        /* Responsive Fixes for this page */
+        @media(max-width: 900px) {
+            .story-container { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-list { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; gap: 1.5rem; }
+            .legal-links a { margin: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Tant Arts</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="nav-links">
+            <li><a href="about.html" style="color:var(--accent-primary);">About</a></li>
+            <li><a href="services.html">Enterprise</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html" class="btn-nav">Book a Call</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-hero">
+        <div class="hero-overlay"></div>
+        <div class="page-title-box">
+            <span class="page-sub">Who We Are</span>
+            <h1 class="page-title">The Tant Arts Story</h1>
+        </div>
+    </header>
+
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-text">
+                <h3>Bridging Art & Strategy</h3>
+                <p>Tant Arts was born from a simple yet powerful realization: most businesses struggle to translate their value into visuals. There is often a disconnect between creative flair and commercial goals.</p>
+                <p>We set out to change that. We are not just photographers or videographers; we are visual strategists. We believe that every frame should serve a purpose—whether it’s to build trust, explain a product, or evoke an emotion that drives a sale.</p>
+                <p>Based in Nairobi but with a global mindset, we have spent the last decade refining a system that delivers consistent, high-end results for brands that refuse to blend in.</p>
+            </div>
+            <div class="story-img-box">
+                <img src="static/img/art-tant-demo.jpg" alt="Tant Arts Creatives" class="story-img">
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-section">
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-number">5+</span>
+                <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">150+</span>
+                <span class="stat-label">Projects Delivered</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">40+</span>
+                <span class="stat-label">Happy Clients</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Industry Awards</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="values-section">
+        <div class="section-header">
+            <span class="section-sub">Our DNA</span>
+            <h2 class="section-title">Built on Principles</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <i class="fa-solid fa-crosshairs value-icon"></i>
+                <h3 class="value-title">Precision</h3>
+                <p class="value-desc">We don't rely on luck. Every shoot is meticulously planned, scripted, and storyboarded to ensure the final output matches the initial vision.</p>
+            </div>
+            <div class="value-card">
+                <i class="fa-solid fa-gem value-icon"></i>
+                <h3 class="value-title">Quality First</h3>
+                <p class="value-desc">We use cinema-grade equipment and advanced post-production techniques. If it doesn't look premium, it doesn't leave our studio.</p>
+            </div>
+            <div class="value-card">
+                <i class="fa-solid fa-rocket value-icon"></i>
+                <h3 class="value-title">Impact</h3>
+                <p class="value-desc">A pretty video is useless if it doesn't perform. We design content specifically to capture attention in the noisy digital landscape.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">Tant Arts</a>
+                    <p class="footer-tagline">Visual narratives that convert.</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-vimeo-v"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-heading">Production Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Commercial Videography</a></li>
+                        <li><a href="#">Brand Photography</a></li>
+                        <li><a href="#">Corporate Filmmaking</a></li>
+                        <li><a href="#">Social Media Content</a></li>
+                        <li><a href="#">Documentary Style</a></li>
+                        <li><a href="#">Event Coverage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Popular Searches</h4>
+                    <div class="footer-tags">
+                        <a href="#" class="tag-box">Brand Strategy</a>
+                        <a href="#" class="tag-box">Visual Storytelling</a>
+                        <a href="#" class="tag-box">ROI Focused</a>
+                        <a href="#" class="tag-box">Online Visibility</a>
+                        <a href="#" class="tag-box">Tech Launch</a>
+                        <a href="#" class="tag-box">Luxury Branding</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright-text">&copy; 2026 Tant Arts.</div>
+                <div class="legal-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- NAV SCROLL ---
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { nav.classList.add('scrolled'); } 
+            else { nav.classList.remove('scrolled'); }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileBtn = document.querySelector('.mobile-toggle');
+        const navList = document.querySelector('.nav-links');
+        const icon = mobileBtn.querySelector('i');
+
+        mobileBtn.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            if (navList.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                icon.style.color = 'var(--accent-primary)';
+            } else {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+                icon.style.color = 'var(--text-main)';
+            }
+        });
+    </script>
+</body>
+</html>

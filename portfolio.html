@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Tant Arts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- COLOR PALETTE: BLACK, TEAL, ORANGE --- */
+            --bg-dark: #050505;
+            --bg-section: #0b0b0b;
+            --bg-card: #121212;
+            
+            /* Primary Accent: TEAL */
+            --accent-primary: #00d4aa; 
+            
+            /* Pop Accent: ORANGE */
+            --accent-pop: #ff6b35; 
+            --accent-pop-hover: #ff8657;
+            
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-light: rgba(255,255,255,0.1);
+            
+            --font-script: 'Great Vibes', cursive;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- SHARED NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            background: transparent; transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.95); padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); border-bottom: 1px solid var(--border-light);
+        }
+        .logo {
+            font-family: var(--font-script); font-size: 2.5rem; color: var(--text-main);
+            text-decoration: none; text-shadow: 0 2px 10px rgba(0,0,0,0.5); position: relative; z-index: 2002;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-links a {
+            color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--accent-primary); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--accent-primary); }
+        .btn-nav {
+            padding: 0.8rem 1.8rem; background: transparent; border: 2px solid var(--accent-primary);
+            color: var(--accent-primary) !important; font-weight: 700; transition: all 0.3s ease;
+        }
+        .btn-nav:hover { background: var(--accent-primary); color: var(--bg-dark) !important; }
+        .mobile-toggle {
+            display: none; background: none; border: none; color: var(--text-main);
+            font-size: 2rem; cursor: pointer; position: relative; z-index: 2002; transition: color 0.3s ease;
+        }
+
+        @media (max-width: 900px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: rgba(5, 5, 5, 0.98); backdrop-filter: blur(15px);
+                flex-direction: column; justify-content: center; align-items: center; gap: 3rem;
+                display: none; z-index: 2001;
+            }
+            .nav-links.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+            .nav-links li { width: 100%; text-align: center; opacity: 0; animation: slideUp 0.4s ease forwards; }
+            .nav-links li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-links li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-links li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-links a { font-size: 1.8rem; display: block; color: #ffffff !important; padding: 10px; }
+            .btn-nav { display: inline-block; margin-top: 1rem; font-size: 1.2rem; padding: 1rem 3rem; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PAGE HERO --- */
+        .page-hero {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Cinematic film set background */
+            background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.95) 100%);
+        }
+        .page-title-box { position: relative; z-index: 2; text-align: center; padding: 0 5%; }
+        .page-sub { color: var(--accent-primary); letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 1rem; }
+        .page-title { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--white); margin: 0; }
+
+        /* --- INTRO SECTION --- */
+        .portfolio-intro { padding: 6rem 5%; background: var(--bg-dark); }
+        .intro-container {
+            max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+        .intro-img img { width: 100%; border-radius: 4px; filter: grayscale(20%); }
+        .intro-text h2 { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 1.5rem; line-height: 1.1; }
+        .intro-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+        /* --- PORTFOLIO FEED --- */
+        .portfolio-feed { padding: 4rem 5% 8rem; background: var(--bg-dark); }
+        
+        /* Filters */
+        .work-filters {
+            display: flex; justify-content: center; gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: none; border: none; color: var(--text-muted);
+            font-family: var(--font-sans); font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 1px; cursor: pointer; padding-bottom: 5px; transition: all 0.3s;
+            position: relative;
+        }
+        .filter-btn:hover, .filter-btn.active { color: var(--accent-primary); }
+        .filter-btn.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background: var(--accent-primary);
+        }
+
+        /* Grid */
+        .portfolio-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem;
+            max-width: 1400px; margin: 0 auto;
+        }
+        .project-card {
+            background: var(--bg-section); border: 1px solid var(--border-light);
+            cursor: pointer; position: relative; overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.5s ease;
+        }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); }
+        
+        .card-thumb { height: 260px; width: 100%; overflow: hidden; position: relative; }
+        .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .project-card:hover .card-thumb img { transform: scale(1.08); }
+        
+        .overlay-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+            width: 60px; height: 60px; background: rgba(0, 212, 170, 0.9); /* Teal Overlay */
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #000; font-size: 1.5rem; opacity: 0; transition: all 0.3s ease;
+        }
+        .project-card:hover .overlay-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        
+        .card-info { padding: 1.5rem; }
+        .card-cat { color: var(--accent-pop); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .card-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--white); margin: 0; }
+
+        /* --- CTA SECTION --- */
+        .cta-section {
+            background: var(--bg-section); padding: 6rem 5%; text-align: center; border-top: 1px solid var(--border-light);
+        }
+        .cta-title { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 1.5rem; }
+        .btn-primary {
+            display: inline-block; background: var(--accent-pop); color: var(--text-main);
+            padding: 1.2rem 3.5rem; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 0.9rem; text-decoration: none; font-weight: 800; border: none;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); transition: all 0.3s ease;
+        }
+        .btn-primary:hover { transform: translateY(-5px); background: var(--accent-pop-hover); }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 3000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 2rem;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal-content {
+            background: var(--bg-modal); width: 100%; max-width: 1200px; max-height: 90vh; overflow-y: auto;
+            border: 1px solid var(--border-light); display: grid; grid-template-columns: 1.5fr 1fr;
+            transform: translateY(30px); transition: transform 0.4s ease;
+        }
+        .modal-overlay.open .modal-content { transform: translateY(0); }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--white); font-size: 2rem; cursor: pointer; z-index: 10; }
+        
+        .modal-media { background: #000; display: flex; align-items: center; justify-content: center; min-height: 400px; }
+        .modal-media img, .modal-media video, .modal-media iframe { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16/9; }
+        
+        .modal-details { padding: 3rem; }
+        .modal-header { border-bottom: 1px solid var(--border-light); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .modal-cat { color: var(--accent-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+        .modal-title { font-family: var(--font-serif); font-size: 2.5rem; margin-top: 0.5rem; line-height: 1.1; }
+        
+        .modal-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .stat-item h4 { color: var(--accent-primary); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.3rem; }
+        .stat-item p { font-size: 1rem; color: var(--text-muted); }
+        
+        .modal-desc { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 2rem; }
+
+        @media(max-width: 900px) {
+            .intro-container, .modal-content { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .modal-media { min-height: 250px; }
+        }
+
+        /* --- Footer (Consistent) --- */
+        .main-footer { background-color: #050505; padding: 6rem 5% 3rem; border-top: 1px solid var(--border-light); font-family: var(--font-sans); }
+        .footer-container { max-width: 1300px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem; }
+        .footer-logo { font-family: var(--font-script); font-size: 2.5rem; color: var(--white); text-decoration: none; display: block; }
+        .footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; letter-spacing: 1px; }
+        .footer-socials { display: flex; gap: 1.5rem; }
+        .social-link { width: 45px; height: 45px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; transition: all 0.3s ease; border-radius: 50%; }
+        .social-link:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-3px); }
+        .footer-divider { height: 1px; background: var(--border-light); margin-bottom: 4rem; }
+        .footer-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; margin-bottom: 5rem; }
+        .footer-heading { font-family: var(--font-serif); font-size: 1.2rem; color: var(--white); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-left: 2px solid var(--accent-primary); padding-left: 1rem; }
+        .footer-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .footer-list a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; display: flex; align-items: center; }
+        .footer-list a:hover { color: var(--white); }
+        .footer-tags { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .tag-box { display: block; padding: 1rem; border: 1px solid var(--border-light); color: var(--text-muted); text-decoration: none; text-align: center; font-size: 0.9rem; transition: all 0.3s ease; }
+        .tag-box:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(0, 212, 170, 0.05); }
+        .footer-bottom { border-top: 1px solid var(--border-light); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 0.85rem; flex-wrap: wrap; gap: 1rem; }
+        .legal-links a { color: #666; text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
+        @media (max-width: 900px) {
+            .footer-content { grid-template-columns: 1fr; gap: 3rem; }
+            .footer-list { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Tant Arts</a>
+        <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Enterprise</a></li>
+            <li><a href="portfolio.html" style="color:var(--accent-primary);">Portfolio</a></li>
+            <li><a href="contact.html" class="btn-nav">Book a Call</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-hero">
+        <div class="hero-overlay"></div>
+        <div class="page-title-box">
+            <span class="page-sub">Selected Works</span>
+            <h1 class="page-title">Visual Portfolio</h1>
+        </div>
+    </header>
+
+    <section class="portfolio-intro">
+        <div class="intro-container">
+            <div class="intro-text">
+                <h2>View My Projects</h2>
+                <p>I have over 10 years of experience creating documentaries, commercials, and films for TV & screen. My clients include international brands, corporations, and private individuals. Here I have curated a range of projects to demonstrate the diversity of my experience.</p>
+                <p>Please use the filters below to see my work in different sectors.</p>
+            </div>
+            <div class="intro-img">
+                <img src="static/img/port-demo-tant.jpg" alt="Filmmaker on set">
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-feed">
+        <div class="work-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="commercial">Commercials</button>
+            <button class="filter-btn" data-filter="docu">Documentaries</button>
+            <button class="filter-btn" data-filter="corporate">Corporate</button>
+            <button class="filter-btn" data-filter="brand">Brand Films</button>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="project-card" data-category="commercial" onclick="openProject('shackleton')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Commercial</div>
+                    <h3 class="card-title">Shackleton Advisers</h3>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="corporate" onclick="openProject('nikon')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Corporate</div>
+                    <h3 class="card-title">Nikon UK Launch</h3>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="docu" onclick="openProject('misk')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Documentary</div>
+                    <h3 class="card-title">Misk Foundation</h3>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="brand" onclick="openProject('vogue')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-camera"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Brand Film</div>
+                    <h3 class="card-title">Vogue Series</h3>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="commercial" onclick="openProject('tesla')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Commercial</div>
+                    <h3 class="card-title">Tesla Promo</h3>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="corporate" onclick="openProject('google')">
+                <div class="card-thumb">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Project Thumb">
+                    <div class="overlay-icon"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="card-info">
+                    <div class="card-cat">Corporate</div>
+                    <h3 class="card-title">Google Summit</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2 class="cta-title">Ready to create something amazing?</h2>
+        <a href="contact.html" class="btn-primary">Start Your Project</a>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">Tant Arts</a>
+                    <p class="footer-tagline">Visual narratives that convert.</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-vimeo-v"></i></a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-heading">Production Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Commercial Videography</a></li>
+                        <li><a href="#">Brand Photography</a></li>
+                        <li><a href="#">Corporate Filmmaking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Popular Searches</h4>
+                    <div class="footer-tags">
+                        <a href="#" class="tag-box">Brand Strategy</a>
+                        <a href="#" class="tag-box">Visual Storytelling</a>
+                        <a href="#" class="tag-box">ROI Focused</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright-text">&copy; 2026 Tant Arts.</div>
+                <div class="legal-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            
+            <div class="modal-media" id="modalMedia">
+                </div>
+            
+            <div class="modal-details">
+                <div class="modal-header">
+                    <span class="modal-cat" id="mCat">Commercial</span>
+                    <h2 class="modal-title" id="mTitle">Project Name</h2>
+                </div>
+                
+                <div class="modal-stats">
+                    <div class="stat-item"><h4>Budget</h4><p id="mBudget">£5,000</p></div>
+                    <div class="stat-item"><h4>Duration</h4><p id="mDuration">2 Weeks</p></div>
+                    <div class="stat-item"><h4>Role</h4><p id="mRole">Director</p></div>
+                    <div class="stat-item"><h4>Deliverables</h4><p id="mDeliverables">4K Video + Socials</p></div>
+                </div>
+                
+                <p class="modal-desc" id="mDesc">Description...</p>
+                
+                <a href="index.html#contact" class="btn-primary" style="font-size:0.8rem; padding: 1rem 2rem;">Enquire Similar</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const projects = {
+            'shackleton': {
+                title: 'Shackleton Advisers', cat: 'Commercial', budget: '£5,000', duration: '3 Minutes', role: 'Director', deliverables: 'Full Promo + 3 Cutdowns',
+                type: 'image', // Change to 'video' if you have embed code
+                src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'A promotional documentary series for a financial adviser. We focused on building trust through intimate interviews and cinematic B-roll of the advisory process.'
+            },
+            'nikon': {
+                title: 'Nikon UK Launch', cat: 'Corporate', budget: '£12,000', duration: '2 Minutes', role: 'Cinematographer', deliverables: 'Event Highlight Film',
+                type: 'image',
+                src: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'High-energy corporate showcase for Nikon UK. The goal was to capture the excitement of the new product reveal using fast-paced editing and dynamic lighting.'
+            },
+            'misk': {
+                title: 'Misk Foundation', cat: 'Documentary', budget: '£25,000', duration: '15 Minutes', role: 'Director', deliverables: 'Docu-Series',
+                type: 'image',
+                src: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'Architectural evolution documentary series. We documented the construction process over 12 months to create a timeless piece of history for the foundation.'
+            },
+            'vogue': {
+                title: 'Vogue Series', cat: 'Brand Film', budget: '£8,000', duration: '1 Minute', role: 'DP & Editor', deliverables: 'Fashion Film',
+                type: 'image',
+                src: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'An editorial shoot focused on sustainable fashion. We utilized natural light and brutalist architecture to contrast with the soft organic fabrics.'
+            },
+            'tesla': {
+                title: 'Tesla Promo', cat: 'Commercial', budget: '£20,000', duration: '30 Seconds', role: 'Director', deliverables: 'TV Spot',
+                type: 'image',
+                src: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'A sleek, high-octane commercial spot for the new Model S. The focus was on speed, silence, and sustainability.'
+            },
+            'google': {
+                title: 'Google Summit', cat: 'Corporate', budget: '£15,000', duration: '5 Minutes', role: 'Producer', deliverables: 'Conference Recap',
+                type: 'image',
+                src: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
+                desc: 'Comprehensive coverage of the annual developer summit. We managed a multi-cam setup to capture keynotes and attendee interactions.'
+            }
+        };
+
+        // --- FILTERING ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                
+                cards.forEach(card => {
+                    if(filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        // Re-trigger animation
+                        card.style.animation = 'none';
+                        card.offsetHeight; /* trigger reflow */
+                        card.style.animation = 'fadeIn 0.5s ease';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('projectModal');
+        const mediaContainer = document.getElementById('modalMedia');
+
+        function openProject(id) {
+            const data = projects[id];
+            if(!data) return;
+
+            document.getElementById('mTitle').innerText = data.title;
+            document.getElementById('mCat').innerText = data.cat;
+            document.getElementById('mBudget').innerText = data.budget;
+            document.getElementById('mDuration').innerText = data.duration;
+            document.getElementById('mRole').innerText = data.role;
+            document.getElementById('mDeliverables').innerText = data.deliverables;
+            document.getElementById('mDesc').innerText = data.desc;
+
+            // Handle Media Type (Image vs Video)
+            if(data.type === 'video') {
+                mediaContainer.innerHTML = data.src; // Assuming src is iframe code for video
+            } else {
+                mediaContainer.innerHTML = `<img src="${data.src}" alt="${data.title}">`;
+            }
+
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            mediaContainer.innerHTML = ''; // Stop video playback
+        }
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        // --- NAV SCROLL ---
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { nav.classList.add('scrolled'); } 
+            else { nav.classList.remove('scrolled'); }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileBtn = document.querySelector('.mobile-toggle');
+        const navList = document.querySelector('.nav-links');
+        const icon = mobileBtn.querySelector('i');
+
+        mobileBtn.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            if (navList.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                icon.style.color = 'var(--accent-primary)';
+            } else {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+                icon.style.color = 'var(--text-main)';
+            }
+        });
+    </script>
+</body>
+</html>

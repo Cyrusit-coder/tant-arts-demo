@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Pricing | Tant Arts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- COLOR PALETTE: BLACK, TEAL, ORANGE --- */
+            --bg-dark: #050505;
+            --bg-section: #0b0b0b;
+            --bg-card: #121212;
+            
+            /* Primary Accent: TEAL */
+            --accent-primary: #00d4aa; 
+            
+            /* Pop Accent: ORANGE */
+            --accent-pop: #ff6b35; 
+            --accent-pop-hover: #ff8657;
+            
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-light: rgba(255,255,255,0.1);
+            
+            --font-script: 'Great Vibes', cursive;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- SHARED NAVIGATION (Same as Index/About) --- */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            background: transparent; transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.95); padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); border-bottom: 1px solid var(--border-light);
+        }
+        .logo {
+            font-family: var(--font-script); font-size: 2.5rem; color: var(--text-main);
+            text-decoration: none; text-shadow: 0 2px 10px rgba(0,0,0,0.5); position: relative; z-index: 2002;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-links a {
+            color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--accent-primary); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--accent-primary); }
+        .btn-nav {
+            padding: 0.8rem 1.8rem; background: transparent; border: 2px solid var(--accent-primary);
+            color: var(--accent-primary) !important; font-weight: 700; transition: all 0.3s ease;
+        }
+        .btn-nav:hover { background: var(--accent-primary); color: var(--bg-dark) !important; }
+        .mobile-toggle {
+            display: none; background: none; border: none; color: var(--text-main);
+            font-size: 2rem; cursor: pointer; position: relative; z-index: 2002; transition: color 0.3s ease;
+        }
+
+        /* Mobile Nav Styles */
+        @media (max-width: 900px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: rgba(5, 5, 5, 0.98); backdrop-filter: blur(15px);
+                flex-direction: column; justify-content: center; align-items: center; gap: 3rem;
+                display: none; z-index: 2001;
+            }
+            .nav-links.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+            .nav-links li { width: 100%; text-align: center; opacity: 0; animation: slideUp 0.4s ease forwards; }
+            .nav-links li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-links li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-links li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-links a { font-size: 1.8rem; display: block; color: #ffffff !important; padding: 10px; }
+            .btn-nav { display: inline-block; margin-top: 1rem; font-size: 1.2rem; padding: 1rem 3rem; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PAGE HERO --- */
+        .page-hero {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Professional camera gear background */
+            background-image: url('https://images.unsplash.com/photo-1533750516457-a7f992034fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.95) 100%);
+        }
+        .page-title-box { position: relative; z-index: 2; text-align: center; padding: 0 5%; }
+        .page-sub { color: var(--accent-primary); letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 1rem; }
+        .page-title { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--white); margin: 0; }
+
+        /* --- SERVICE CATEGORIES GRID --- */
+        .services-section { padding: 8rem 5%; background: var(--bg-dark); }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-title { font-family: var(--font-serif); font-size: 2.5rem; color: var(--white); }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 3rem 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 0;
+            background: var(--accent-primary);
+            transition: height 0.3s ease;
+        }
+
+        .service-card:hover::before { height: 100%; }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent-pop); /* Orange Pop for Icons */
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .service-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-list li {
+            color: var(--white);
+            font-size: 0.9rem;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .service-list li::before {
+            content: '✓';
+            color: var(--accent-primary);
+            position: absolute;
+            left: 0;
+        }
+
+        /* --- PACKAGES / PRICING --- */
+        .packages-section { background: var(--bg-section); padding: 8rem 5%; }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .package-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card.recommended {
+            border-color: var(--accent-primary);
+            background: linear-gradient(180deg, rgba(0, 212, 170, 0.05) 0%, rgba(5,5,5,1) 100%);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .pkg-name {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .pkg-price {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .pkg-price span { font-size: 1rem; color: var(--text-muted); font-family: var(--font-sans); }
+
+        .pkg-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            text-align: left;
+            flex-grow: 1; /* Pushes button to bottom */
+        }
+
+        .pkg-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .pkg-features li i {
+            color: var(--accent-primary);
+            margin-right: 10px;
+        }
+
+        .btn-pkg {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid var(--accent-pop); /* Orange Border */
+            color: var(--accent-pop);
+            text-transform: uppercase;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-pkg:hover {
+            background: var(--accent-pop);
+            color: var(--text-main);
+        }
+
+        /* --- CUSTOM BUILDER SECTION --- */
+        .custom-section { padding: 8rem 5%; background: var(--bg-dark); }
+        .custom-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 4rem;
+            border-radius: 4px;
+        }
+
+        .custom-header { text-align: center; margin-bottom: 3rem; }
+        .custom-form { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        
+        .form-check-group {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            padding: 1rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .checkbox-label:hover { border-color: var(--accent-primary); }
+        .checkbox-label input { margin-right: 10px; accent-color: var(--accent-primary); }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            color: var(--white);
+            outline: none;
+        }
+        
+        .form-input:focus { border-color: var(--accent-primary); }
+        .full-width { grid-column: 1 / -1; }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            padding: 1.2rem;
+            background: var(--accent-primary);
+            border: none;
+            color: var(--bg-dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover { background: #00b38f; }
+
+        /* Footer (Consistent) */
+        .main-footer { background-color: #050505; padding: 6rem 5% 3rem; border-top: 1px solid var(--border-light); font-family: var(--font-sans); }
+        .footer-container { max-width: 1300px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem; }
+        .footer-logo { font-family: var(--font-script); font-size: 2.5rem; color: var(--white); text-decoration: none; display: block; }
+        .footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; letter-spacing: 1px; }
+        .footer-socials { display: flex; gap: 1.5rem; }
+        .social-link { width: 45px; height: 45px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; transition: all 0.3s ease; border-radius: 50%; }
+        .social-link:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-3px); }
+        .footer-divider { height: 1px; background: var(--border-light); margin-bottom: 4rem; }
+        .footer-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; margin-bottom: 5rem; }
+        .footer-heading { font-family: var(--font-serif); font-size: 1.2rem; color: var(--white); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-left: 2px solid var(--accent-primary); padding-left: 1rem; }
+        .footer-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .footer-list a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; display: flex; align-items: center; }
+        .footer-list a:hover { color: var(--white); }
+        .footer-tags { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .tag-box { display: block; padding: 1rem; border: 1px solid var(--border-light); color: var(--text-muted); text-decoration: none; text-align: center; font-size: 0.9rem; transition: all 0.3s ease; }
+        .tag-box:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(0, 212, 170, 0.05); }
+        .footer-bottom { border-top: 1px solid var(--border-light); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 0.85rem; flex-wrap: wrap; gap: 1rem; }
+        .legal-links a { color: #666; text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
+        
+        @media(max-width: 900px) {
+            .packages-grid { grid-template-columns: 1fr; }
+            .package-card.recommended { transform: scale(1); }
+            .custom-form { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Tant Arts</a>
+        <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html" style="color:var(--accent-primary);">Enterprise</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html" class="btn-nav">Book a Call</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-hero">
+        <div class="hero-overlay"></div>
+        <div class="page-title-box">
+            <span class="page-sub">Professional Solutions</span>
+            <h1 class="page-title">Services & Pricing</h1>
+        </div>
+    </header>
+
+    <section class="services-section">
+        <div class="section-header">
+            <span class="section-sub">What We Deliver</span>
+            <h2 class="section-title">Comprehensive Visual <span style="color:var(--accent-primary);">Strategies</span></h2>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-film service-icon"></i>
+                <h3 class="service-title">Commercial Film</h3>
+                <p class="service-desc">High-end video production for TV, web, and internal use. We handle everything from concept to final cut.</p>
+                <ul class="service-list">
+                    <li>Concept & Scripting</li>
+                    <li>4K/6K Cinema Production</li>
+                    <li>Professional Lighting & Audio</li>
+                    <li>Advanced Color Grading</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-camera service-icon"></i>
+                <h3 class="service-title">Brand Photography</h3>
+                <p class="service-desc">Still images that define your brand identity. Perfect for websites, lookbooks, and advertising campaigns.</p>
+                <ul class="service-list">
+                    <li>Product Photography</li>
+                    <li>Corporate Headshots</li>
+                    <li>Lifestyle Shoots</li>
+                    <li>Event Coverage</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-bullhorn service-icon"></i>
+                <h3 class="service-title">Digital Strategy</h3>
+                <p class="service-desc">We don't just make content; we ensure it gets seen. We align visuals with your marketing goals for maximum ROI.</p>
+                <ul class="service-list">
+                    <li>Content Planning</li>
+                    <li>Social Media Reels</li>
+                    <li>Ad Campaign Assets</li>
+                    <li>Distribution Strategy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="packages-section">
+        <div class="section-header">
+            <span class="section-sub">Investment</span>
+            <h2 class="section-title">Production Packages</h2>
+        </div>
+
+        <div class="packages-grid">
+            <div class="package-card">
+                <span class="pkg-name">Starter</span>
+                <div class="pkg-price">£2,500 <span>/ project</span></div>
+                <ul class="pkg-features">
+                    <li><i class="fa-solid fa-check"></i> 1 Day Shoot</li>
+                    <li><i class="fa-solid fa-check"></i> 1 Videographer</li>
+                    <li><i class="fa-solid fa-check"></i> Basic Editing</li>
+                    <li><i class="fa-solid fa-check"></i> 1 Revision Round</li>
+                    <li><i class="fa-solid fa-check"></i> HD Delivery</li>
+                </ul>
+                <a href="#custom-build" class="btn-pkg">Select Plan</a>
+            </div>
+
+            <div class="package-card recommended">
+                <span class="pkg-name" style="color:var(--accent-pop);">Professional</span>
+                <div class="pkg-price">£5,000 <span>/ project</span></div>
+                <ul class="pkg-features">
+                    <li><i class="fa-solid fa-check"></i> 2 Day Shoot</li>
+                    <li><i class="fa-solid fa-check"></i> Director + DP</li>
+                    <li><i class="fa-solid fa-check"></i> Professional Lighting</li>
+                    <li><i class="fa-solid fa-check"></i> Advanced Editing & Color</li>
+                    <li><i class="fa-solid fa-check"></i> 3 Revision Rounds</li>
+                    <li><i class="fa-solid fa-check"></i> Social Media Cutdowns</li>
+                </ul>
+                <a href="#custom-build" class="btn-pkg" style="background:var(--accent-pop); color:white; border:none;">Most Popular</a>
+            </div>
+
+            <div class="package-card">
+                <span class="pkg-name">Enterprise</span>
+                <div class="pkg-price">£10k+ <span>/ project</span></div>
+                <ul class="pkg-features">
+                    <li><i class="fa-solid fa-check"></i> Full Production Crew</li>
+                    <li><i class="fa-solid fa-check"></i> Script & Storyboard</li>
+                    <li><i class="fa-solid fa-check"></i> Casting & Location Mgmt</li>
+                    <li><i class="fa-solid fa-check"></i> Cinema Grade Post-Prod</li>
+                    <li><i class="fa-solid fa-check"></i> Unlimited Revisions</li>
+                    <li><i class="fa-solid fa-check"></i> Full Campaign Strategy</li>
+                </ul>
+                <a href="#custom-build" class="btn-pkg">Select Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="custom-build" class="custom-section">
+        <div class="custom-container">
+            <div class="custom-header">
+                <span class="section-sub">Build Your Own</span>
+                <h2 class="section-title">Custom Quote Generator</h2>
+                <p style="color:var(--text-muted); margin-top:1rem;">Select exactly what you need, and we'll craft a bespoke proposal for you.</p>
+            </div>
+
+            <form class="custom-form">
+                <div class="form-check-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="service" value="video"> Commercial Video
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="service" value="photo"> Brand Photography
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="service" value="drone"> Drone / Aerial
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="service" value="social"> Social Media Content
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="service" value="strategy"> Marketing Strategy
+                    </label>
+                </div>
+
+                <input type="text" class="form-input" placeholder="Your Name" required>
+                <input type="email" class="form-input" placeholder="Email Address" required>
+                <input type="text" class="form-input" placeholder="Company / Brand">
+                <select class="form-input" style="color:var(--text-muted);">
+                    <option>Estimated Budget</option>
+                    <option>£1k - £5k</option>
+                    <option>£5k - £15k</option>
+                    <option>£15k - £50k</option>
+                    <option>£50k+</option>
+                </select>
+                
+                <textarea class="form-input full-width" rows="4" placeholder="Tell us more about your project vision..."></textarea>
+
+                <button type="submit" class="btn-submit">Request Custom Quote</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">Tant Arts</a>
+                    <p class="footer-tagline">Visual narratives that convert.</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-vimeo-v"></i></a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-heading">Production Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Commercial Videography</a></li>
+                        <li><a href="#">Brand Photography</a></li>
+                        <li><a href="#">Corporate Filmmaking</a></li>
+                        <li><a href="#">Social Media Content</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Popular Searches</h4>
+                    <div class="footer-tags">
+                        <a href="#" class="tag-box">Brand Strategy</a>
+                        <a href="#" class="tag-box">Content Marketing</a>
+                        <a href="#" class="tag-box">Visual Storytelling</a>
+                        <a href="#" class="tag-box">ROI Focused</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright-text">&copy; 2026 Tant Arts.</div>
+                <div class="legal-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- NAV SCROLL ---
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { nav.classList.add('scrolled'); } 
+            else { nav.classList.remove('scrolled'); }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileBtn = document.querySelector('.mobile-toggle');
+        const navList = document.querySelector('.nav-links');
+        const icon = mobileBtn.querySelector('i');
+
+        mobileBtn.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            if (navList.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                icon.style.color = 'var(--accent-primary)';
+            } else {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+                icon.style.color = 'var(--text-main)';
+            }
+        });
+    </script>
+</body>
+</html>
